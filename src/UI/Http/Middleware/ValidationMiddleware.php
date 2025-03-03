@@ -92,7 +92,7 @@ readonly class ValidationMiddleware
                     ]),
                 ],
             ],
-            'allowExtraFields' => true,
+            'allowExtraFields' => false,
         ]);
     }
 
@@ -111,21 +111,8 @@ readonly class ValidationMiddleware
                     new Assert\NotBlank(['message' => 'creditId не должен быть пустым']),
                     new Assert\Uuid(['message' => 'creditId должен быть валидным UUID']),
                 ],
-                'productName' => new Assert\NotBlank(['message' => 'Название продукта не должно быть пустым']),
-                'term' => [
-                    new Assert\NotBlank(['message' => 'Срок кредита обязателен']),
-                    new Assert\Type(['type' => 'integer', 'message' => 'Срок кредита должен быть числом']),
-                ],
-                'interestRate' => [
-                    new Assert\NotBlank(['message' => 'Процентная ставка обязателена']),
-                    new Assert\Type(['type' => 'numeric', 'message' => 'Процентная ставка должна быть числовой']),
-                ],
-                'amount' => [
-                    new Assert\NotBlank(['message' => 'Сумма кредита обязана быть указана']),
-                    new Assert\Type(['type' => 'numeric', 'message' => 'Сумма кредита должна быть числовой']),
-                ],
             ],
-            'allowExtraFields' => true,
+            'allowExtraFields' => false,
         ]);
     }
 
@@ -141,7 +128,7 @@ readonly class ValidationMiddleware
                 'state' => new Assert\NotBlank(['message' => 'state обязателен']),
                 'zip' => new Assert\NotBlank(['message' => 'zip обязателен']),
             ],
-            'allowExtraFields' => true,
+            'allowExtraFields' => false,
         ]);
     }
 }
