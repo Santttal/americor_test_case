@@ -9,11 +9,13 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-readonly class ValidationMiddleware
+final class ValidationMiddleware
 {
-    public function __construct(
-        private ValidatorInterface $validator,
-    ) {
+    private ValidatorInterface $validator;
+
+    public function __construct(ValidatorInterface $validator)
+    {
+        $this->validator = $validator;
     }
 
     public function onKernelRequest(RequestEvent $event): void
@@ -26,7 +28,9 @@ readonly class ValidationMiddleware
 
         $data = json_decode($request->getContent(), true);
         if (null === $data) {
-            $event->setResponse(new JsonResponse(['error' => 'Некорректный JSON'], JsonResponse::HTTP_BAD_REQUEST));
+            $event->setResponse(
+                new JsonResponse(['error' => 'Некорректный JSON'], JsonResponse::HTTP_BAD_REQUEST)
+            );
 
             return;
         }
@@ -35,7 +39,7 @@ readonly class ValidationMiddleware
 
         if ('client_create' === $routeName) {
             $constraints = $this->getClientCreateConstraints();
-        } elseif ('credit_issue' === $routeName) {
+        } elseif (in_array($routeName, ['credit_issue', 'credit_pre_check'], true)) {
             $constraints = $this->getCreditIssueConstraints();
         } else {
             return;
@@ -97,7 +101,7 @@ readonly class ValidationMiddleware
     }
 
     /**
-     * Ограничения для выдачи кредита.
+     * Ограничения для выдачи кредита и предварительной проверки.
      */
     private function getCreditIssueConstraints(): Assert\Collection
     {
@@ -107,9 +111,9 @@ readonly class ValidationMiddleware
                     new Assert\NotBlank(['message' => 'clientId не должен быть пустым']),
                     new Assert\Uuid(['message' => 'clientId должен быть валидным UUID']),
                 ],
-                'creditId' => [
-                    new Assert\NotBlank(['message' => 'creditId не должен быть пустым']),
-                    new Assert\Uuid(['message' => 'creditId должен быть валидным UUID']),
+                'creditProductId' => [
+                    new Assert\NotBlank(['message' => 'creditProductId не должен быть пустым']),
+                    new Assert\Uuid(['message' => 'creditProductId должен быть валидным UUID']),
                 ],
             ],
             'allowExtraFields' => false,
