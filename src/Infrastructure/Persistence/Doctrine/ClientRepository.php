@@ -10,6 +10,9 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\LockMode;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<Client>
+ */
 final class ClientRepository extends ServiceEntityRepository implements ClientRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
@@ -24,6 +27,7 @@ final class ClientRepository extends ServiceEntityRepository implements ClientRe
         $entityManager->flush();
     }
 
+    #[\Override]
     public function find(mixed $id, LockMode|int|null $lockMode = null, ?int $lockVersion = null): ?Client
     {
         return parent::find($id);

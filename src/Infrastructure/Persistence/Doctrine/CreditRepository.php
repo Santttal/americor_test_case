@@ -10,6 +10,9 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\LockMode;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<Credit>
+ */
 final class CreditRepository extends ServiceEntityRepository implements CreditRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
@@ -24,6 +27,7 @@ final class CreditRepository extends ServiceEntityRepository implements CreditRe
         $entityManager->flush();
     }
 
+    #[\Override]
     public function find(mixed $id, LockMode|int|null $lockMode = null, ?int $lockVersion = null): ?Credit
     {
         return parent::find($id, $lockMode, $lockVersion);

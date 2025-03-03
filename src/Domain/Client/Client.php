@@ -10,59 +10,19 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'clients')]
 class Client
 {
-    #[ORM\Id]
-    #[ORM\Column(type: 'string')]
-    private string $id;
-
-    #[ORM\Column(type: 'string')]
-    private string $firstName;
-
-    #[ORM\Column(type: 'string')]
-    private string $lastName;
-
-    #[ORM\Column(type: 'integer')]
-    private int $age;
-
-    #[ORM\Column(type: 'string')]
-    private string $ssn;
-
-    #[ORM\Embedded(class: Address::class)]
-    private Address $address;
-
-    #[ORM\Column(type: 'integer')]
-    private int $creditRating;
-
-    #[ORM\Column(type: 'string')]
-    private string $email;
-
-    #[ORM\Column(type: 'string')]
-    private string $phone;
-
-    #[ORM\Column(type: 'float')]
-    private float $monthlyIncome;
-
-    public function __construct(
-        string $id,
-        string $firstName,
-        string $lastName,
-        int $age,
-        string $ssn,
-        Address $address,
-        int $creditRating,
-        string $email,
-        string $phone,
-        float $monthlyIncome,
-    ) {
-        $this->id = $id;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->age = $age;
-        $this->ssn = $ssn;
-        $this->address = $address;
-        $this->creditRating = $creditRating;
-        $this->email = $email;
-        $this->phone = $phone;
-        $this->monthlyIncome = $monthlyIncome;
+    public function __construct(#[ORM\Id]
+        #[ORM\Column(type: 'string')]
+        private string $id, #[ORM\Column(type: 'string')]
+        private string $firstName, #[ORM\Column(type: 'string')]
+        private string $lastName, #[ORM\Column(type: 'integer')]
+        private int $age, #[ORM\Column(type: 'string')]
+        private string $ssn, #[ORM\Embedded(class: Address::class)]
+        private Address $address, #[ORM\Column(type: 'integer')]
+        private int $creditRating, #[ORM\Column(type: 'string')]
+        private string $email, #[ORM\Column(type: 'string')]
+        private string $phone, #[ORM\Column(type: 'float')]
+        private float $monthlyIncome)
+    {
     }
 
     public function updateInformation(
