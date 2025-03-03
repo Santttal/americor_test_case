@@ -89,7 +89,18 @@ Follow these steps to get started:
 ```
 {
   "clientId": "client-uuid-generated-by-backend",
-  "creaditId": "credit-uuid-generated-by-backend",
+  "creditId": "credit-uuid-generated-by-backend",
+  "term": 10,
+  "amount": 10000,
+}
+```
+### Pre check Credit
+- Endpoint: `POST /credit/issue`
+- Request Body:
+```
+{
+  "clientId": "client-uuid-generated-by-backend",
+  "creditId": "credit-uuid-generated-by-backend"
 }
 ```
 
