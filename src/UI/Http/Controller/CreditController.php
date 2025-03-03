@@ -42,6 +42,8 @@ final class CreditController extends AbstractController
         $command = new IssueCreditCommand(
             $data['clientId'],
             $data['creditId'],
+            (int) $data['term'],
+            (float) $data['amount'],
         );
 
         try {

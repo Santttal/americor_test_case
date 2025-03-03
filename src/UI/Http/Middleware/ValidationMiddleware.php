@@ -36,8 +36,10 @@ readonly class ValidationMiddleware
 
         if ('client_create' === $routeName) {
             $constraints = $this->getClientCreateConstraints();
-        } elseif (in_array($routeName, ['credit_issue', 'credit_pre_check'], true)) {
+        } elseif ('credit_issue' === $routeName) {
             $constraints = $this->getCreditIssueConstraints();
+        } elseif ('credit_pre_check' === $routeName) {
+            $constraints = $this->getCreditPreCheckConstraints();
         } else {
             return;
         }
@@ -97,10 +99,34 @@ readonly class ValidationMiddleware
         ]);
     }
 
-    /**
-     * Ограничения для выдачи кредита и предварительной проверки.
-     */
     private function getCreditIssueConstraints(): Assert\Collection
+    {
+        return new Assert\Collection([
+            'fields' => [
+                'clientId' => [
+                    new Assert\NotBlank(['message' => 'clientId не должен быть пустым']),
+                    new Assert\Uuid(['message' => 'clientId должен быть валидным UUID']),
+                ],
+                'creditId' => [
+                    new Assert\NotBlank(['message' => 'creditId не должен быть пустым']),
+                    new Assert\Uuid(['message' => 'creditId должен быть валидным UUID']),
+                ],
+                'term' => [
+                    new Assert\NotBlank(['message' => 'term обязателен']),
+                    new Assert\Type(['type' => 'integer', 'message' => 'term должен быть числом']),
+                    new Assert\GreaterThanOrEqual(['value' => 1, 'message' => 'term должен быть положительным']),
+                ],
+                'amount' => [
+                    new Assert\NotBlank(['message' => 'amount обязателен']),
+                    new Assert\Type(['type' => 'numeric', 'message' => 'amount должен быть числовым']),
+                    new Assert\GreaterThan(['value' => 0, 'message' => 'amount должен быть больше нуля']),
+                ],
+            ],
+            'allowExtraFields' => false,
+        ]);
+    }
+
+    private function getCreditPreCheckConstraints(): Assert\Collection
     {
         return new Assert\Collection([
             'fields' => [
@@ -117,9 +143,6 @@ readonly class ValidationMiddleware
         ]);
     }
 
-    /**
-     * Ограничения для валидации адреса.
-     */
     private function getAddressConstraints(): Assert\Collection
     {
         return new Assert\Collection([

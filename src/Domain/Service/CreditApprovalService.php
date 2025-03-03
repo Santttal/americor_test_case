@@ -11,7 +11,12 @@ class CreditApprovalService
 {
     public function canApprove(Client $client, Credit $credit): bool
     {
-        $address = $client->getAddress();
+        $state = $client->getAddress()->state;
+        if ('NY' === $state) {
+            if (0 === random_int(0, 1)) {
+                return false;
+            }
+        }
 
         if ($client->getCreditRating() <= 500) {
             return false;
@@ -22,35 +27,13 @@ class CreditApprovalService
         if ($client->getAge() < 18 || $client->getAge() > 60) {
             return false;
         }
-        if (!in_array($address->state, ['CA', 'NY', 'NV'], true)) {
+        if (!in_array($state, ['CA', 'NY', 'NV'], true)) {
             return false;
         }
 
-        return true;
-    }
-
-    /**
-     * Принятие решения о выдаче кредита с учетом специфических правил:
-     * - Для NY отказ производится случайным образом.
-     * - Для CA процентная ставка увеличивается на 11.49%.
-     */
-    public function approve(Client $client, Credit $credit): bool
-    {
-        if (!$this->canApprove($client, $credit)) {
-            return false;
-        }
-
-        $state = $client->getAddress()->state;
-        if ('NY' === $state) {
-            // случайное решение: примерно 50% отказ
-            if (0 === random_int(0, 1)) {
-                return false;
-            }
-        }
-
-        if ('CA' === $state) {
-            $credit->increaseInterestRate(11.49);
-        }
+//        if ('CA' === $state) {
+            $credit->increaseInterestRate(11.49); // todo  вынести в отдельный сервис
+//        }
 
         return true;
     }

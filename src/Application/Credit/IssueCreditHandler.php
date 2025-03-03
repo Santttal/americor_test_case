@@ -44,6 +44,9 @@ readonly class IssueCreditHandler
             $issuedCreditId,
             $client,
             $creditProduct,
+            $creditProduct->getInterestRate(),
+            $command->term,
+            $command->amount,
             new \DateTimeImmutable(),
         );
         $this->issuedCreditRepository->save($issuedCredit);

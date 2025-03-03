@@ -22,6 +22,12 @@ final class IssuedCredit
         #[ORM\ManyToOne(targetEntity: Credit::class)]
         #[ORM\JoinColumn(name: 'credit_id', referencedColumnName: 'id', nullable: false)]
         private Credit $credit,
+        #[ORM\Column(type: 'float')]
+        private float $interestRate,
+        #[ORM\Column(type: 'integer')]
+        private int $term,
+        #[ORM\Column(type: 'float')]
+        private float $amount,
         #[ORM\Column(type: 'datetime_immutable')]
         private \DateTimeInterface $issuedAt,
     ) {
