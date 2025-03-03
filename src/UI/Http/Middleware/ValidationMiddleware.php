@@ -9,13 +9,10 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-final class ValidationMiddleware
+readonly class ValidationMiddleware
 {
-    private ValidatorInterface $validator;
-
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(private ValidatorInterface $validator)
     {
-        $this->validator = $validator;
     }
 
     public function onKernelRequest(RequestEvent $event): void

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Credit
 {
     public function __construct(#[ORM\Id]
-        #[ORM\Column(type: 'string')]
+        #[ORM\Column(type: 'string', length: 36)]
         private string $id, #[ORM\Column(type: 'string')]
         private string $productName, #[ORM\Column(type: 'integer')]
         private int $term, #[ORM\Column(type: 'float')]

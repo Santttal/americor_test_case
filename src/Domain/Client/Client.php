@@ -11,15 +11,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Client
 {
     public function __construct(#[ORM\Id]
-        #[ORM\Column(type: 'string')]
-        private string $id, #[ORM\Column(type: 'string')]
-        private string $firstName, #[ORM\Column(type: 'string')]
+        #[ORM\Column(type: 'string', length: 36)]
+        private string $id, #[ORM\Column(type: 'string', length: 255)]
+        private string $firstName, #[ORM\Column(type: 'string', length: 255)]
         private string $lastName, #[ORM\Column(type: 'integer')]
-        private int $age, #[ORM\Column(type: 'string')]
+        private int $age, #[ORM\Column(type: 'string', length: 255)]
         private string $ssn, #[ORM\Embedded(class: Address::class)]
         private Address $address, #[ORM\Column(type: 'integer')]
-        private int $creditRating, #[ORM\Column(type: 'string')]
-        private string $email, #[ORM\Column(type: 'string')]
+        private int $creditRating, #[ORM\Column(type: 'string', length: 255)]
+        private string $email, #[ORM\Column(type: 'string', length: 255)]
         private string $phone, #[ORM\Column(type: 'float')]
         private float $monthlyIncome)
     {

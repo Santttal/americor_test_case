@@ -12,15 +12,19 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'issued_credits')]
 final class IssuedCredit
 {
-    public function __construct(#[ORM\Id]
-        #[ORM\Column(type: 'string')]
-        private string $id, #[ORM\ManyToOne(targetEntity: Client::class)]
+    public function __construct(
+        #[ORM\Id]
+        #[ORM\Column(type: 'string', length: 36)]
+        private string $id,
+        #[ORM\ManyToOne(targetEntity: Client::class)]
         #[ORM\JoinColumn(name: 'client_id', referencedColumnName: 'id', nullable: false)]
-        private Client $client, #[ORM\ManyToOne(targetEntity: Credit::class)]
+        private Client $client,
+        #[ORM\ManyToOne(targetEntity: Credit::class)]
         #[ORM\JoinColumn(name: 'credit_id', referencedColumnName: 'id', nullable: false)]
-        private Credit $credit, #[ORM\Column(type: 'datetime')]
-        private \DateTimeInterface $issuedAt)
-    {
+        private Credit $credit,
+        #[ORM\Column(type: 'datetime')]
+        private \DateTimeInterface $issuedAt,
+    ) {
     }
 
     public function getId(): string
