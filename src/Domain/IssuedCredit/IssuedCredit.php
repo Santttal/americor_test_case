@@ -22,7 +22,7 @@ final class IssuedCredit
         #[ORM\ManyToOne(targetEntity: Credit::class)]
         #[ORM\JoinColumn(name: 'credit_id', referencedColumnName: 'id', nullable: false)]
         private Credit $credit,
-        #[ORM\Column(type: 'datetime')]
+        #[ORM\Column(type: 'datetime_immutable')]
         private \DateTimeInterface $issuedAt,
     ) {
     }

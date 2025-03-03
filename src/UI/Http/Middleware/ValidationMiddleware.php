@@ -108,9 +108,9 @@ readonly class ValidationMiddleware
                     new Assert\NotBlank(['message' => 'clientId не должен быть пустым']),
                     new Assert\Uuid(['message' => 'clientId должен быть валидным UUID']),
                 ],
-                'creditProductId' => [
-                    new Assert\NotBlank(['message' => 'creditProductId не должен быть пустым']),
-                    new Assert\Uuid(['message' => 'creditProductId должен быть валидным UUID']),
+                'creditId' => [
+                    new Assert\NotBlank(['message' => 'creditId не должен быть пустым']),
+                    new Assert\Uuid(['message' => 'creditId должен быть валидным UUID']),
                 ],
             ],
             'allowExtraFields' => false,

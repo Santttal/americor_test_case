@@ -22,7 +22,7 @@ final class CreditController extends AbstractController
 
         $command = new PreCheckCreditCommand(
             $data['clientId'],
-            $data['creditProductId']
+            $data['creditId']
         );
 
         try {

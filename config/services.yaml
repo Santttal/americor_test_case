@@ -26,3 +26,13 @@ services:
     App\UI\Http\Middleware\ValidationMiddleware:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 10 }
+
+    App\Infrastructure\Notification\CompositeNotificationService:
+        arguments:
+            $services:
+                - '@App\Infrastructure\Notification\EmailNotificationService'
+                - '@App\Infrastructure\Notification\SmsNotificationService'
+
+    App\Infrastructure\Notification\NotificationServiceInterface:
+        alias: App\Infrastructure\Notification\CompositeNotificationService
+        public: true

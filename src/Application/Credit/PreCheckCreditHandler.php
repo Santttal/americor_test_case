@@ -23,7 +23,7 @@ readonly class PreCheckCreditHandler
         if (!$client) {
             throw new \Exception('Клиент не найден');
         }
-        $creditProduct = $this->creditRepository->find($command->creditProductId);
+        $creditProduct = $this->creditRepository->find($command->creditId);
         if (!$creditProduct) {
             throw new \Exception('Кредитный продукт не найден');
         }

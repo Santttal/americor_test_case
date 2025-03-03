@@ -11,7 +11,7 @@ services:
       - mysql
     restart: "no"
     ports:
-      - "8082:80"
+      - "8083:80"
       - "8043:443"
     volumes:
       - .:/app

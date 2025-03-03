@@ -8,7 +8,7 @@ readonly class IssueCreditCommand
 {
     public function __construct(
         public string $clientId,
-        public string $creditProductId,
+        public string $creditId,
     ) {
     }
 }
