@@ -12,6 +12,7 @@ class CreditApprovalService
     public function canApprove(Client $client, Credit $credit): bool
     {
         $state = $client->getAddress()->state;
+
         if ('NY' === $state) {
             if (0 === random_int(0, 1)) {
                 return false;
@@ -30,10 +31,6 @@ class CreditApprovalService
         if (!in_array($state, ['CA', 'NY', 'NV'], true)) {
             return false;
         }
-
-//        if ('CA' === $state) {
-            $credit->increaseInterestRate(11.49); // todo  вынести в отдельный сервис
-//        }
 
         return true;
     }

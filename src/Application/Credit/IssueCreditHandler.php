@@ -9,6 +9,7 @@ use App\Domain\Credit\CreditRepositoryInterface;
 use App\Domain\IssuedCredit\IssuedCredit;
 use App\Domain\IssuedCredit\IssuedCreditRepositoryInterface;
 use App\Domain\Service\CreditApprovalService;
+use App\Domain\Service\CreditInterestRateAdjustmentService;
 use App\Infrastructure\Notification\NotificationServiceInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -19,6 +20,7 @@ readonly class IssueCreditHandler
         private CreditRepositoryInterface $creditRepository,
         private IssuedCreditRepositoryInterface $issuedCreditRepository,
         private CreditApprovalService $approvalService,
+        private CreditInterestRateAdjustmentService $creditInterestRateAdjustmentService,
         private NotificationServiceInterface $notificationService,
     ) {
     }
@@ -30,12 +32,12 @@ readonly class IssueCreditHandler
             throw new \Exception('Клиент не найден');
         }
 
-        $creditProduct = $this->creditRepository->find($command->creditId);
-        if (!$creditProduct) {
+        $credit = $this->creditRepository->find($command->creditId);
+        if (!$credit) {
             throw new \Exception('Кредитный продукт не найден');
         }
 
-        if (!$this->approvalService->canApprove($client, $creditProduct)) {
+        if (!$this->approvalService->canApprove($client, $credit)) {
             throw new \Exception('Кредит не может быть выдан клиенту');
         }
 
@@ -43,8 +45,8 @@ readonly class IssueCreditHandler
         $issuedCredit = new IssuedCredit(
             $issuedCreditId,
             $client,
-            $creditProduct,
-            $creditProduct->getInterestRate(),
+            $credit,
+            $this->creditInterestRateAdjustmentService->adjust($client, $credit),
             $command->term,
             $command->amount,
             new \DateTimeImmutable(),

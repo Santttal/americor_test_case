@@ -34,9 +34,4 @@ class Credit
     {
         return $this->interestRate;
     }
-
-    public function increaseInterestRate(float $percentage): void
-    {
-        $this->interestRate += $percentage;
-    }
 }
