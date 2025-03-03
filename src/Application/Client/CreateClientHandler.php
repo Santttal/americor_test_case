@@ -6,6 +6,7 @@ namespace App\Application\Client;
 
 use App\Domain\Client\Client;
 use App\Domain\Client\ClientRepositoryInterface;
+use Symfony\Component\Uid\Uuid;
 
 readonly class CreateClientHandler
 {
@@ -17,7 +18,7 @@ readonly class CreateClientHandler
     public function handle(CreateClientCommand $command): void
     {
         $client = new Client(
-            $command->id,
+            Uuid::v4()->toRfc4122(),
             $command->firstName,
             $command->lastName,
             $command->age,

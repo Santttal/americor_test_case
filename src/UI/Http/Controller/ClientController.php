@@ -29,7 +29,6 @@ class ClientController extends AbstractController
         );
 
         $command = new CreateClientCommand(
-            $data['id'] ?? '', // либо генерировать идентификатор, либо проверять его наличие
             $data['firstName'],
             $data['lastName'],
             (int) $data['age'],
@@ -66,7 +65,7 @@ class ClientController extends AbstractController
         );
 
         $command = new UpdateClientCommand(
-            $data['id'], // идентификатор клиента, который нужно обновить
+            $data['id'],
             $data['firstName'],
             $data['lastName'],
             (int) $data['age'],
