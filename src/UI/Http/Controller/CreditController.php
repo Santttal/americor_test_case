@@ -27,6 +27,7 @@ final class CreditController extends AbstractController
 
         try {
             $canIssue = $handler->handle($command);
+
             return new JsonResponse(['canIssue' => $canIssue]);
         } catch (\Exception $e) {
             return new JsonResponse(['status' => 'error', 'message' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
